@@ -1,6 +1,5 @@
-from database import Base
+from .database import Base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
-
 
 class Activities(Base):
     __tablename__ = 'Activities'
@@ -12,16 +11,25 @@ class Activities(Base):
     progress =  Column(Integer, default = 0)
     active = Column(Boolean, default = False)
     category_id = Column(Integer, ForeignKey('ActivitiesCategories.id'), default = 1)
+    type_id = Column(Integer, ForeignKey('ActivitiesTypes.id'), default = 1)
     user_id = Column(Integer, ForeignKey('Users.id'))
 
 class ActivitiesCategories(Base):
-    __tablename__ = 'Categories'
+    __tablename__ = 'ActivitiesCategories'
 
     id =  Column(Integer, primary_key = True, index = True)
     name =  Column(String)
     description =  Column(String)
     level = Column(Integer)
     picture = Column(String)
+    active = Column(Boolean)
+
+class ActivitiesTypes (Base):
+    __tablename__ = 'ActivitiesTypes'
+
+    id =  Column(Integer, primary_key = True, index = True)
+    name =  Column(String)
+    description =  Column(String)
     active = Column(Boolean)
     
 class Users(Base):
@@ -37,7 +45,6 @@ class Users(Base):
     hashed_password = Column(String)
     creation_date = Column(DateTime)
     active = Column(Boolean)
-
 
 
     

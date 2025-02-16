@@ -1,11 +1,16 @@
-import models as models
 from fastapi import FastAPI
-from database import engine
-from rourers import activities, auth
+
+from .models import Base
+from .database import engine
+from .routers import activities, auth
 
 app = FastAPI()
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind = engine)
+
+@app.get('/life')
+def health_check():
+    return {'status': 'alive'}
 
 app.include_router(activities.router)
 app.include_router(auth.router)
