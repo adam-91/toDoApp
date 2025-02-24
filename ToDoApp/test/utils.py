@@ -20,6 +20,8 @@ engine = create_engine(
 
 )
 
+date = datetime(2025, 2, 1, 6, 0, 0)
+
 TestingSessionLocal = sessionmaker(autocommit = False, autoflush = False, bind = engine)
 
 Base.metadata.create_all(bind = engine)
@@ -46,8 +48,6 @@ def override_get_current_user():
             }
 
 client = TestClient(app)
-
-date = datetime(2025, 2, 1, 6, 0, 0)
 
 @pytest.fixture
 def test_activity():
@@ -76,11 +76,35 @@ def test_user():
         login='test 2',
         email='test@a.pl',
         name='Ariel',
+        second_name='test',
         surname='Gruszkowski',
         hashed_password = bcrypt_context.hash('test_password'),
         phone= '+48 000 000 000',
         creation_date= date,
         active = True
+    )
+
+    db = TestingSessionLocal()
+    db.add(user)
+    db.commit()
+
+    yield user
+    with engine.connect() as connection:
+        connection.execute(text('DELETE FROM users;'))
+        connection.commit()
+
+@pytest.fixture
+def test_user2():
+    user = Users(
+        login = 'test1', 
+        name = 'Gabriel', 
+        second_name = 'Kacper',
+        surname = 'Malinowski', 
+        email = 'test1234@com.pl',
+        phone = '+48 000 000 000',
+        creation_date = date,
+        active = True,
+        hashed_password = bcrypt_context.hash('test_password'),
     )
 
     db = TestingSessionLocal()

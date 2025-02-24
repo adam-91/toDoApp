@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from .models import Base
 from .database import engine
-from .routers import activities, auth
+from .routers import activities, auth, users
 
 app = FastAPI()
 
@@ -14,3 +14,4 @@ def health_check():
 
 app.include_router(activities.router)
 app.include_router(auth.router)
+app.include_router(users.router)
