@@ -44,7 +44,7 @@ def get_db():
     finally:
         db.close()
 
-db_dependancy = Annotated[Session, Depends(get_db)]
+db_dependency = Annotated[Session, Depends(get_db)]
 
 def authenticate_user(login: str, password: str, db):
     user = db.query(Users).filter(Users.login == login).first()
@@ -75,7 +75,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate user')
 
 @router.post('/',status_code = status.HTTP_201_CREATED)
-async def create_user(db: db_dependancy, create_user_request: CreateUserRequest):
+async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
     create_user_model = Users(
         login = create_user_request.login,
         email = create_user_request.email,
@@ -93,7 +93,7 @@ async def create_user(db: db_dependancy, create_user_request: CreateUserRequest)
 
 @router.post('/token', response_model=Token)
 async def login_for_acess_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], 
-                                db: db_dependancy):
+                                db: db_dependency):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
          raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate user ')

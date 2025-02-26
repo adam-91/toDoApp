@@ -10,12 +10,12 @@ class Activities(Base):
     priority =  Column(Integer, default = 1)
     progress =  Column(Integer, default = 0)
     active = Column(Boolean, default = False)
-    category_id = Column(Integer, ForeignKey('ActivitiesCategories.id'), default = 1)
-    type_id = Column(Integer, ForeignKey('ActivitiesTypes.id'), default = 1)
+    category_id = Column(Integer, ForeignKey('Categories.id'), default = 1)
+    type_id = Column(Integer, ForeignKey('Types.id'), default = 1)
     user_id = Column(Integer, ForeignKey('Users.id'))
 
-class ActivitiesCategories(Base):
-    __tablename__ = 'ActivitiesCategories'
+class Categories(Base):
+    __tablename__ = 'Categories'
 
     id =  Column(Integer, primary_key = True, index = True)
     name =  Column(String)
@@ -24,8 +24,8 @@ class ActivitiesCategories(Base):
     picture = Column(String)
     active = Column(Boolean)
 
-class ActivitiesTypes (Base):
-    __tablename__ = 'ActivitiesTypes'
+class Types (Base):
+    __tablename__ = 'Types'
 
     id =  Column(Integer, primary_key = True, index = True)
     name =  Column(String)

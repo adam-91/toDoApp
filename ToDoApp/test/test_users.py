@@ -52,5 +52,5 @@ def test_change_name(test_user):
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
     response = client.get("/user")
-    assert response.json()['ssurname'] == 'new_test_surname'
+    assert response.json()['surname'] == 'new_test_surname'
 

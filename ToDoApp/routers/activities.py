@@ -18,7 +18,7 @@ def get_db():
     finally:
         db.close()
 
-db_dependancy = Annotated[Session, Depends(get_db)]
+db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
 class ActivitiesRequest(BaseModel):
@@ -30,7 +30,7 @@ class ActivitiesRequest(BaseModel):
 
 @router.get('/', status_code = status.HTTP_200_OK)
 async def read_all_activities(user: user_dependency,
-                              db: db_dependancy):
+                              db: db_dependency):
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Authentication Faild')
     
@@ -38,7 +38,7 @@ async def read_all_activities(user: user_dependency,
 
 @router.get('/activity/{activity_id}', status_code = status.HTTP_200_OK)
 async def read_activity(user: user_dependency,
-                        db: db_dependancy, 
+                        db: db_dependency, 
                         activity_id: int = Path(gt=0)):
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Authentication Faild')
@@ -50,10 +50,9 @@ async def read_activity(user: user_dependency,
         return activities_model
     raise HTTPException(status_code=404, detail='Activity not found')
 
-
 @router.post('/activity', status_code=status.HTTP_201_CREATED)
 async def create_activity(user: user_dependency,
-                          db: db_dependancy, 
+                          db: db_dependency, 
                           activities_request: ActivitiesRequest):
     
     if user is None:
@@ -65,7 +64,7 @@ async def create_activity(user: user_dependency,
 
 @router.put('/activity/{activity_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def update_activity(user: user_dependency,
-                          db: db_dependancy, 
+                          db: db_dependency, 
                           activities_request: ActivitiesRequest,
                           activity_id: int = Path(gt=0)):
     
@@ -89,7 +88,7 @@ async def update_activity(user: user_dependency,
 
 @router.delete('/activity/{activity_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_actvity(user: user_dependency,
-                         db: db_dependancy, 
+                         db: db_dependency, 
                          activity_id: int = Path(gt=0)):
     
     if user is None:
