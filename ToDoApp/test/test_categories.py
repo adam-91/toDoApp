@@ -30,6 +30,11 @@ def test_return_category(test_category):
     assert response.json()['picture'] == 'no picture'
     assert response.json()['active'] == True
 
+def test_return_not_existed_category(test_types):
+    response = client.get("/categories/2")
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
 def test_update_category(test_category):
     category_request = {
                 'name': 'Czynności 2',
@@ -59,5 +64,5 @@ def test_delete_category(test_category):
     db = TestingSessionLocal()
     category_model = db.query(Categories).filter(Categories.id == 1).first()
     
-    assert category_model  is None
+    assert category_model.active == False
 

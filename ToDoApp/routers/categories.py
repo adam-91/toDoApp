@@ -13,7 +13,6 @@ router = APIRouter(
     tags=['categories']
 )
 
-
 def get_db():
     db = SessionLocal()
 
@@ -98,6 +97,6 @@ async def change_acategories(db: db_dependency,
     
     category_model.active = False
     
-    db.delete(category_model)
+    db.add(category_model)
     db.commit()
     return

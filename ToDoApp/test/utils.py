@@ -8,7 +8,7 @@ import pytest
 
 from ..database import Base
 from ..main import app
-from ..models import Activities, Categories, Users
+from ..models import Activities, Categories, Types, Users
 from ..routers.auth import bcrypt_context
 
 SQLALCHEMY_DATABASE_URL = 'sqlite:///./testdb.db'
@@ -133,4 +133,21 @@ def test_category():
     yield category
     with engine.connect() as connection:
         connection.execute(text('DELETE FROM Categories;'))
+        connection.commit()
+
+@pytest.fixture
+def test_types():
+    types = Types(
+        name = 'Zadanie jednorazowe',
+        description = 'Zadanie jednorazowe, zrób i zakończ',
+        active = True,
+    )
+
+    db = TestingSessionLocal()
+    db.add(types)
+    db.commit()
+
+    yield types
+    with engine.connect() as connection:
+        connection.execute(text('DELETE FROM Types;'))
         connection.commit()
