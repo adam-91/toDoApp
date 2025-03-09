@@ -39,6 +39,9 @@ def valid_email_format(email: str):
     else:
         return False
 
+###########
+### API ###
+###########
 
 @router.get('/', status_code = status.HTTP_200_OK)
 async def get_user(user: user_dependency, db: db_dependency):

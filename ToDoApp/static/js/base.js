@@ -1,4 +1,4 @@
-// Login JS
+//login
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     loginForm.addEventListener('submit', async function (event) {
@@ -11,7 +11,7 @@ if (loginForm) {
         for (const [key, value] of formData.entries()) {
             payload.append(key, value);
         }
-        console.log("Kliknąłem na element B");
+
         try {
             const response = await fetch('/auth/token', {
                 method: 'POST',
@@ -30,13 +30,62 @@ if (loginForm) {
                 window.location.href = '/activities/activity-page';
             } else {
                 const errorData = await response.json();
-                alert(`Error: ${errorData.detail}`);
+                console.error('Error:', errorData);
+                //alert(`Error: ${errorData.detail}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            //alert('An error occurred. Please try again.');
+        }
+
+    });
+}
+
+//registration
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+    registerForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const form = event.target
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        if (data.password !== data.password2) {
+            alert("Passwords don't match");
+            return;
+        }
+
+        const payload = {
+            login: data.login,
+            email: data.email,
+            name: data.name,
+            second_name: data.secondname,
+            surname: data.surname,
+            phone: data.phone,
+            password: data.password
+        };
+
+        try {   
+            const response = await fetch('/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                window.location.href = '/auth/login-page';
+            } else {
+                const errorData = await response.json();
+                const errorMessage = JSON.stringify(errorData.detail)
+                alert(errorMessage);
             }
         } catch (error) {
             console.error('Error:', error);
             alert('An error occurred. Please try again.');
-        }
-
+        };
     });
 }
 

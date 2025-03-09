@@ -1,0 +1,46 @@
+{% include 'layout.html' %}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Register
+        </div>
+        <div class="card-body"></div>
+            <form id="registerForm">
+                <div>
+                    <label>Email</label>
+                    <input type="text" class="form-control" name="email" required>
+                </div>
+                <div>
+                    <label>Login</label>
+                    <input type="text" class="form-control" name="login" required>
+                </div>
+                <div>
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div>
+                    <label>Second Name</label>
+                    <input type="text" class="form-control" name="secondname">
+                </div>
+                <div>
+                    <label>Surname</label>
+                    <input type="text" class="form-control" name="surname" required>
+                </div>
+                <div>
+                    <label>Phone</label>
+                    <input type="text" class="form-control" name="phone" autocomplete="phone_number" required>
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" autocomplete="new-password" required>
+                </div>
+                <div>
+                    <label>Verify Password</label>
+                    <input type="password" class="form-control" name="password2" autocomplete="new-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+        </div>
+    </div>
+</div>

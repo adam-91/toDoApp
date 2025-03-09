@@ -95,6 +95,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
 
 @router.post('/',status_code = status.HTTP_201_CREATED)
 async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
+
     create_user_model = Users(
         login = create_user_request.login,
         email = create_user_request.email,
@@ -115,7 +116,7 @@ async def login_for_acess_token(form_data: Annotated[OAuth2PasswordRequestForm, 
                                 db: db_dependency):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
-         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate user ')
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate user ')
         
     token = create_access_token(user.login, user.id, timedelta(minutes=5))
     return {'access_token': token, 'token_type': 'bearer'}
