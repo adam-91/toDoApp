@@ -95,21 +95,30 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
 
 @router.post('/',status_code = status.HTTP_201_CREATED)
 async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
+    try:
 
-    create_user_model = Users(
-        login = create_user_request.login,
-        email = create_user_request.email,
-        name =  create_user_request.name,
-        second_name = create_user_request.second_name,
-        surname = create_user_request.surname,
-        hashed_password = bcrypt_context.hash(create_user_request.password),
-        phone = create_user_request.phone,
-        creation_date = datetime.now(timezone.utc),
-        active = True
-    )
+        existUser = db.query(Users).filter((Users.login == create_user_request.login) | (Users.email==create_user_request.email)).first()
 
-    db.add(create_user_model)
-    db.commit()
+        if existUser:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='User with this email or login exost in the system')
+        
+        create_user_model = Users(
+            login = create_user_request.login,
+            email = create_user_request.email,
+            name =  create_user_request.name,
+            second_name = create_user_request.second_name,
+            surname = create_user_request.surname,
+            hashed_password = bcrypt_context.hash(create_user_request.password),
+            phone = create_user_request.phone,
+            creation_date = datetime.now(timezone.utc),
+            active = True
+        )
+    
+        db.add(create_user_model)
+        db.commit()
+
+    except:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Wrong request data')
 
 @router.post('/token', response_model=Token)
 async def login_for_acess_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], 
