@@ -2,23 +2,21 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/base.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/style.css') }}">
         <meta charset="UTF-8">
         <title>To do app</title>
     </head>
     <body>
-        <div>
+
             {% include 'topBar.html' %}
-        </div>
-        <div> 
+
             {% block content %}
 
             {% endblock %}
-        </div>
-        <footer> 
-            <div class="footer">
-                <a href="/auth/register-page"> Register </a>
-            </div>
-        </footer>
+
+            {% include 'footer.html' %}
+
+           
         
         <script src="{{ url_for('static', path='/js/base.js') }}" defer></script>
     </body>

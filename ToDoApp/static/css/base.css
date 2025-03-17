@@ -1,7 +1,83 @@
-.topBar {
-    order: 1
-}
+:root {
+    --primary-color: #28a745; 
+    --secondary-color: #007bff; 
+    --regular-color: #6c757d; 
+    --font-color: #f8f9fa;
+    --accent-color: #ffc107;  
+    --background-color: #343a40; 
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --primary: #0e76a8;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+  }
 
-.footer {
-    order: 999
-}
+  .one {
+    order: 1;
+  }
+  
+  .two {
+    order: 2;
+  }
+  
+  .three {
+    order: 3;
+  }
+  
+  .four {
+    order: 4;
+  }
+  
+  .five {
+    order: 5;
+  }
+  
+  .six {
+    order: 6;
+  }
+  
+  .seven {
+    order: 7;
+  }
+  
+  .eight {
+    order: 8;
+  }
+  
+  .vertical_space {
+    height: 4rem;
+  }
+  
+  .vertical_space_s {
+    height: 1rem;
+  }
+
+  .error {
+    border-color: var( --red);
+    border-width: 0.2rem;
+    border-style: solid;
+  }
+
+  .visible {
+    visibility: visible;
+  }
+
+  .invisible {
+    visibility: hidden;
+  }

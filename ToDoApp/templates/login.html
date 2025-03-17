@@ -1,12 +1,13 @@
 {% include 'layout.html' %}
 
-<div class="container">
+<div class="container center_h">
+    <div class="vertical_space"> </div>
     <div class="card">
         <div class="card-header">
-            Login
+            <h1> To do application </h1>
         </div>
         <div class="card-body">
-            <form id="loginForm">
+            <form id="loginForm" >
                 <div class="form-group">
                     <label>Username</label>
                     <input type="text" class="form-control" name="username" autocomplete="username" required>
@@ -15,9 +16,19 @@
                     <label>Password</label>
                     <input type="password" class="form-control" name="password" autocomplete="current-password" required>
                 </div>
-                <button id="loginBtn" type="submit" class="btn btn-primary">Login</button>
+                <div class="vertical_space"> </div>
+                <div>
+                    <button id="loginBtn" type="submit" class="btn btn-primary center_h three">Login</button>
+                </div>
             </form>
         </div>
-       
+    </div>
+    <div class="vertical_space"> </div>
+    <div>
+        <hr class="standard_line">
+    </div>
+    <div class="vertical_space_s"> </div>
+    <div>
+        <button id="goRegisterBtn" class="btn btn-secondary center_h">Sign up</button>
     </div>
 </div>

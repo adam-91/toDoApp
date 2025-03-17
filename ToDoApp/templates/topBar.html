@@ -1,11 +1,15 @@
 <div class="topBar">
-    <h1> 
-        {% if user %}
-        
-        {{ user.login }}
+    
+    {% if user %}
+        <div class="two"> 
+            <h1> 
+                {{ user.login }} 
+            </h1>
+        </div>
+        <div class="one">  
+             <a type="button" class="btn btn-logout" onclick="logout()">Logout</a>
+        </div>
+       
+    {% endif %}
 
-        {% endif %}
-    </h1>
-
-    <a type="button" class="btn" onclick="logout()">Logout</a>
 </div>

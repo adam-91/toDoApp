@@ -1,46 +1,64 @@
 {% include 'layout.html' %}
 
-<div class="container">
+<div class="container center_h">
     <div class="card">
         <div class="card-header">
-            Register
+            <h1> Sign up </h1>
         </div>
-        <div class="card-body"></div>
+        <div class="card-body">
             <form id="registerForm">
-                <div>
+                <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control" name="email" required>
+                    <input type="text" class="form-control" name="email" id="email" onblur="validateEmail(this)" required>
+                    <span id="emailError" class="error invisible"></span>
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Login</label>
-                    <input type="text" class="form-control" name="login" required>
+                    <input type="text" class="form-control" name="login" onblur="validateLogin(this)" required>
+                    <span id="loginError" class="error invisible"></span>
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" name="name" required>
+                    <input type="text" class="form-control" name="name" onblur="validateName(this)" required>
+                    <span id="nameError" class="error invisible"></span>
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Second Name</label>
                     <input type="text" class="form-control" name="secondname">
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Surname</label>
-                    <input type="text" class="form-control" name="surname" required>
+                    <input type="text" class="form-control" name="surname" onblur="validateSurname(this)" required>
+                    <span id="surnameError" class="error invisible"></span>
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Phone</label>
-                    <input type="text" class="form-control" name="phone" autocomplete="phone_number" required>
+                    <input type="text" class="form-control" name="phone" autocomplete="phone_number" onblur="validatePhone(this)" required>
+                    <span id="phoneError" class="error invisible"></span>
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" name="password" autocomplete="new-password" required>
+                    <input type="password" class="form-control" name="password" autocomplete="new-password" onblur="validatePassword(this)" required>
+                    <span id="passwordError" class="error invisible"></span>
                 </div>
-                <div>
+                <div class="form-group">
                     <label>Verify Password</label>
                     <input type="password" class="form-control" name="password2" autocomplete="new-password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <div class="vertical_space"> </div>
+                <div>
+                    <button type="submit" class="btn btn-primary center_h">Sign up</button>
+                </div>
+                
             </form>
         </div>
+    </div>
+    <div class="vertical_space"> </div>
+    <div>
+        <hr class="standard_line">
+    </div>
+    <div class="vertical_space_s"> </div>
+    <div>
+        <button id="goLoginBtn" class="btn btn-secondary center_h">Sign in</button>
     </div>
 </div>
