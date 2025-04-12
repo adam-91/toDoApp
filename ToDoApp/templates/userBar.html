@@ -1,0 +1,16 @@
+<div class="userBar">
+    <div class="flex-row">
+
+        {% if user %}
+        <div class="one"> 
+            <p> 
+                {{ user.login }} 
+            </p>
+        </div>
+        <div class="two">  
+             <a type="button" class="btn btn-logout" onclick="logout()">Logout</a>
+        </div>
+       
+        {% endif %}
+    </div>
+</div>

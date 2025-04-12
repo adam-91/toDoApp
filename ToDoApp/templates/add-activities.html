@@ -1,0 +1,75 @@
+{% include 'layout.html' %}
+
+<div class="container">
+    </div class="topBar"> </div>
+    <div class="rightBar flex-column">    
+        <div class="vertical_space_s"> </div>
+        <button id="addButton" class="btn btn-primary"> Add + </button>
+    </div>
+       
+    <div class="main">
+        <div class="card center_h">
+            <div class="card-header">
+                Add new Activities
+            </div>
+            <div class="card-body">
+                <form id="activitiesForm">
+                    <div class="form-group">
+                        <label>Activity</label>
+                        <input type="text" class="form-control" name="activity" onblur="validateActivityName(this)" required>
+                        <span id="nameError" class="error invisible"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" name="description">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="Types input list" class="form-control" name="type" required>
+                            {% for type in types %}
+                                <option value="{{ type.id }}" data_id="{{ type.id }}"> {{ type.name }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="Categories input list" class="form-control" name="category" required>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" data_id="{{ category.id }}"> {{ category.name }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="Priorities list" class="form-control" name="priorities" required>
+                            
+                            <option value="1"> 1. Optional </option>
+                            <option value="2"> 2. Very low </option>
+                            <option value="3"> 3. Low </option>
+                            <option value="4"> 4. Medium low</option>
+                            <option value="5"> 5. Medium </option>
+                            <option value="6"> 6. Medoium high </option>
+                            <option value="7"> 7. High </option>
+                            <option value="8"> 8. Very high </option>
+                            <option value="9"> 9. Extrymly high </option>
+                            <option value="10"> 10. Must </option>
+                             
+                        </select>
+                    </div>
+                    <div class="vertical_space"> </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary center_h">Create</button>
+                    </div>
+                    
+                </form>
+                <div>
+                    <hr class="standard_line">
+                </div>
+                <div class="vertical_space_s"> </div>
+                <div>
+                    <button type="button" id="goToActivitiesBtn" class="btn btn-secondary center_h">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

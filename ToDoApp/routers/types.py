@@ -1,12 +1,14 @@
 from typing import Annotated
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, HTTPException, Depends, Path
+from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi.templating import Jinja2Templates
 from starlette import status
 from pydantic import BaseModel, Field
 
 from ..models import Types, Activities
 from ..database import SessionLocal
 from .auth import get_current_user
+from .utils import redirect_to_login
 
 router = APIRouter(
     prefix='/types',
@@ -24,11 +26,34 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
+templates = Jinja2Templates(directory="ToDoApp/templates")
+
 class TypeRequest(BaseModel):
     name: str = Field(min_length=3)
     description: str = Field(min_length=3)
     active: bool
 
+###########
+## Pages ##
+###########
+
+@router.get('/add-page')
+async def render_types_add_page(request: Request, db: db_dependency):
+    try:
+        user = await get_current_user(request.cookies.get('access_token'))
+
+        if user is None:
+            return redirect_to_login()
+        
+        types = db.query(Types).filter(Types.active == True).all()
+        return templates.TemplateResponse("add-types.html", {"request": request, "user": user, "types": types})
+
+    except:
+        return redirect_to_login()
+
+###########
+### API ###
+###########
 
 @router.get('/', status_code = status.HTTP_200_OK)
 async def get_types(db: db_dependency):

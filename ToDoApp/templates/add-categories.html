@@ -1,0 +1,43 @@
+{% include 'layout.html' %}
+
+<div class="container">
+    </div class="topBar"> </div>
+    <div class="rightBar flex-column">  </div>
+       
+    <div class="main">
+        <div class="card center_h">
+            <div class="card-header">
+                Add new category
+            </div>
+            <div class="card-body">
+                <form id="categoriesForm">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" class="form-control" name="category" onblur="validateNameLength(this)" required>
+                        <span id="nameError" class="error invisible"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" name="description">
+                    </div>  
+                    <div class="form-group">
+                        <label>Level</label>
+                        <input type="text" class="form-control" name="level">
+                    </div>                
+                    <div class="vertical_space"> </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary center_h">Create</button>
+                    </div>
+                    
+                </form>
+                <div>
+                    <hr class="standard_line">
+                </div>
+                <div class="vertical_space_s"> </div>
+                <div>
+                    <button type="button" id="goToActivitiesBtn" class="btn btn-secondary center_h">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

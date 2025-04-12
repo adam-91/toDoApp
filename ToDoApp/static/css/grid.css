@@ -1,0 +1,31 @@
+body {
+    display: grid;
+    grid-template-columns: 40% 40% 20%;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "userBar userBar userBar"
+        "topBar topBar rightBar"
+        "main main rightBar"
+        "footer footer footer";
+}
+
+.userBar {
+    grid-area: userBar;
+}
+
+.topBar {
+    grid-area: topBar;
+}
+
+.rightBar {
+    grid-area: rightBar;
+}
+
+.main {
+    grid-area: main;
+}
+
+.footer {
+    grid-area: footer;
+}
+

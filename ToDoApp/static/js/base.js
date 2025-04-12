@@ -117,6 +117,39 @@ function validatePassword2(input) {
     }
 };
 
+function validateNameLength(input) {
+    const value = input.value
+    const nameError = document.getElementById("nameError");
+    if (!value || value.length < 3) {
+        nameError.textContent = "To short, minimum lenght 3";
+        nameError.className =  "visible"
+        input.className ="form-control error"
+        return 1
+    } else {
+        nameError.textContent = "";
+        nameError.className =  "invisible"
+        input.className ="form-control"
+        return 0
+    }
+};
+
+function validateActivityName(input) {
+    //dorobic sprawdzanie czy juz taka istnieje
+    const value = input.value
+    const nameError = document.getElementById("nameError");
+    if (!value || value.length < 3) {
+        nameError.textContent = "To short, minimum lenght 3";
+        nameError.className =  "visible"
+        input.className ="form-control error"
+        return 1
+    } else {
+        nameError.textContent = "";
+        nameError.className =  "invisible"
+        input.className ="form-control"
+        return 0
+    }
+};
+
 
 function logout() {
     const cookies = document.cookie.split(";");
@@ -128,6 +161,21 @@ function logout() {
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
     }
     window.location.href = '/auth/login-page';
+};
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 };
 
 //login
@@ -233,6 +281,158 @@ if (registerForm) {
     });
 }
 
+//add new category
+const categoriesForm = document.getElementById('categoriesForm');
+if (categoriesForm) {
+    categoriesForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const form = event.target
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        const level = Number(data.level)
+        const payload = {
+            name: data.category,
+            description: data.description,
+            level: level,
+            active: 'True',
+            picture: 'string'
+        };
+        
+        try {   
+            const token = getCookie('access_token');
+            if (!token) {
+                throw new Error('Authentication token not found');
+            }
+            
+            const response = await fetch('/categories', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+             document.cookie = `access_token=${data.access_token}; path=/`
+
+            if (response.ok) {
+                //const data = await response.text();
+            } else {
+                const errorData = response.text()
+                const errorMessage = JSON.stringify(errorData.detail)
+                alert(errorMessage);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        };
+    });
+}
+
+
+//add new type
+const typesForm = document.getElementById('typesForm');
+if (typesForm) {
+    typesForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const form = event.target
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        const payload = {
+            name: data.type,
+            description: data.description,
+            active: 'True'
+        };
+
+        try {   
+            const token = getCookie('access_token');
+            if (!token) {
+                throw new Error('Authentication token not found');
+            }
+            
+            const response = await fetch('/types', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+             document.cookie = `access_token=${data.access_token}; path=/`
+
+            if (response.ok) {
+                //const data = await response.text();
+            } else {
+                const errorData = response.text()
+                const errorMessage = JSON.stringify(errorData.detail)
+                alert(errorMessage);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        };
+    });
+}
+
+//add new activity
+const activitiesForm = document.getElementById('activitiesForm');
+if (activitiesForm) {
+    activitiesForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const form = event.target
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        let type_id = document.getElementById('Types input list');
+        let selectedOption = type_id.options[type_id.selectedIndex];
+        type_id = selectedOption.value;
+        let category_id = document.getElementById('Categories input list');
+        selectedOption = category_id.options[category_id.selectedIndex];
+        category_id = selectedOption.value;
+
+        const payload = {
+            name: data.activity,
+            description: data.description,
+            active: 'True',
+            progress: 0,
+            priority: data.priorities,
+            category_id: category_id,
+            type_id: type_id
+        };
+            alert( JSON.stringify(payload))
+        try {   
+            const token = getCookie('access_token');
+            if (!token) {
+                throw new Error('Authentication token not found');
+            }
+            
+            const response = await fetch('/activities/activity', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+             document.cookie = `access_token=${data.access_token}; path=/`
+
+            if (response.ok) {
+                //const data = await response.text();
+            } else {
+                const errorData = response.text()
+                const errorMessage = JSON.stringify(errorData.detail)
+                alert(errorMessage);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        };
+    });
+}
+
 const goRregisterBtn = document.getElementById('goRegisterBtn');
 if (goRregisterBtn) {
     goRregisterBtn.addEventListener('click', async function (event) {
@@ -242,12 +442,64 @@ if (goRregisterBtn) {
     });
 };
 
-const goLoginBtn= document.getElementById('goLoginBtn');
+const goLoginBtn = document.getElementById('goLoginBtn');
 if (goLoginBtn) {
     goLoginBtn.addEventListener('click', async function (event) {
         event.preventDefault();
     
         window.location.href = '/auth/login-page';
+    });
+};
+
+const goAddActivityBtn = document.getElementById('addActivityBtn');
+if (goAddActivityBtn) {
+    goAddActivityBtn.addEventListener('click', async function (event) {
+        event.preventDefault();
+
+        const token = getCookie('access_token');
+        if (!token) {
+            throw new Error('Authentication token not found');
+        }
+
+       
+        document.cookie = `access_token=${token}; path=/`
+        
+        window.location.href = '/activities/add-page';
+    });
+};
+
+const goAddACategoryBtn = document.getElementById('addCategoryBtn');
+if (goAddACategoryBtn) {
+    goAddACategoryBtn.addEventListener('click', async function (event) {
+        event.preventDefault();
+    
+        window.location.href = '/categories/add-page';
+    });
+};
+
+const goAddTypeBtn = document.getElementById('addTypeBtn');
+if (goAddTypeBtn) {
+    goAddTypeBtn.addEventListener('click', async function (event) {
+        event.preventDefault();
+    
+        window.location.href = '/types/add-page';
+    });
+};
+
+const goToActivitiesBtn = document.getElementById('goToActivitiesBtn');
+if (goToActivitiesBtn) {
+    goToActivitiesBtn.addEventListener('click', async function (event) {
+        event.preventDefault();
+
+        const token = getCookie('access_token');
+        if (!token) {
+            throw new Error('Authentication token not found');
+        }
+
+       
+        document.cookie = `access_token=${token}; path=/`
+        
+        window.location.href = '/activities/activity-page';
     });
 };
 
